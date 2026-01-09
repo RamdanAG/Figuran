@@ -1,0 +1,418 @@
+.figure-scroll {
+  position: relative;
+  width: 100%;  
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.figure-slide {
+  position: fixed;
+  inset: 0;        // 🔥 lebih aman dari top/left/right
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+
+  
+  // Default state - hidden
+  &__background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; // 🔥 penting
+    transform: translateY(100%);
+    transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+
+    .background-image {
+      position: absolute;
+      inset: -5%;               // 🔥 pengganti width:110%
+      background-size: cover;
+      background-position: center;
+
+      /* 🔒 SCALE DIKUNCI — TIDAK PERNAH DIUBAH */
+      transform: scale(1.05);
+      transform-origin: center;
+      backface-visibility: hidden;
+
+      /* 🔥 PARALLAX AMAN (BUKAN TRANSFORM) */
+      animation: bgPan 20s linear infinite;
+
+      filter: brightness(1);
+      will-change: background-position;
+    }
+  }
+
+
+  
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.15) 50%,
+      rgba(0, 0, 0, 0.35) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  
+  &__content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 4rem 3rem;
+    z-index: 5;
+    opacity: 0;
+    transform: translateY(50px);
+    transition:
+      opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.3s,
+      transform 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.3s;
+  }
+
+  
+  &__info {
+    flex: 1;
+    
+    .info-tag {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5rem;
+      font-family: 'Crimson Text', serif;
+      font-weight: 300;
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.5s,
+                  transform 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.5s;
+    }
+    
+    .info-title {
+      font-size: 5rem;
+      font-weight: 300;
+      color: white;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      font-family: 'Playfair Display', serif;
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.6s,
+                  transform 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.6s;
+    }
+    
+    .info-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0 0 2rem 0;
+      letter-spacing: 0.08em;
+      font-family: 'Crimson Text', serif;
+      font-weight: 300;
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.7s,
+                  transform 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.7s;
+    }
+    
+    .info-btn {
+      background: white;
+      color: #000;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Crimson Text', serif;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.9s,
+                  transform 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.9s,
+                  background 0.3s ease,
+                  box-shadow 0.3s ease;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateY(18px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+  
+  &__details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2rem;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.8s,
+                transform 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.8s;
+    
+    .detail-date {
+      font-size: 1.1rem;
+      color: white;
+      letter-spacing: 0.1em;
+      font-family: 'Crimson Text', serif;
+      text-align: right;
+      
+      .copyright {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 0.25rem;
+      }
+    }
+    
+    .detail-credits {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      
+      .credit-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+        
+        .credit-label {
+          font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.6);
+          letter-spacing: 0.1em;
+          font-family: 'Crimson Text', serif;
+        }
+        
+        .credit-name {
+          font-size: 0.95rem;
+          color: white;
+          letter-spacing: 0.05em;
+          font-family: 'Crimson Text', serif;
+        }
+      }
+    }
+  }
+  
+  // Active state
+  &.active {
+    pointer-events: auto;
+    
+    .figure-slide__background {
+      transform: translateY(0);
+      
+      // Parallax effect - background bergerak ke kiri perlahan
+      .background-image {
+        animation: slowPanLeft 20s linear infinite;
+        clip-path: inset(0 0 0 0);
+        filter: brightness(1);
+      }
+    }
+    
+    .figure-slide__content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .info-tag,
+    .info-title,
+    .info-subtitle {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .info-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .figure-slide__details {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  // Previous slide - slide ke atas dengan efek cutting
+  &.prev {
+    .figure-slide__background {
+      transform: translateY(-100%);
+      
+      // Smooth exit
+      .background-image {
+        clip-path: inset(0 0 0 0);
+        animation: none;
+        filter: brightness(0.5);
+        transform: scale(1.1);
+      }
+    }
+    
+    .figure-slide__content {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+  }
+  
+  // Next slide - hidden di bawah
+  &.next {
+    .figure-slide__background {
+      transform: translateY(100%);
+      
+      .background-image {
+        animation: none;
+        clip-path: inset(0 0 0 0);
+        filter: brightness(0.5);
+        transform: scale(0.9);
+      }
+    }
+    
+    .figure-slide__content {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+  }
+  
+  // Transitioning state - efek cutting yang smooth (no glitch!)
+  &.transitioning {
+    .figure-slide__background {
+      transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+      
+      .background-image {
+        // Smooth cutting tanpa segitiga glitch
+        clip-path: inset(0 0 0 0);
+        transition: all 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+        filter: brightness(0.7);
+      }
+    }
+  }
+}
+
+// Parallax animation - background gerak ke kiri
+@keyframes slowPanLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-10%);
+  }
+}
+
+// Scroll indicator
+.scroll-indicator {
+  position: fixed;
+  bottom: 3rem;
+  left: 3rem;
+  z-index: 1000;
+  
+  .scroll-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    
+    .progress-text {
+      font-size: 1.2rem;
+      color: white;
+      font-family: 'Crimson Text', serif;
+      letter-spacing: 0.1em;
+      font-weight: 300;
+    }
+    
+    .progress-bars {
+      display: flex;
+      gap: 0.5rem;
+      
+      .progress-bar {
+        width: 40px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+        
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 0%;
+          height: 100%;
+          background: white;
+          transition: width 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+        
+        &.completed {
+          background: rgba(255, 255, 255, 0.5);
+          
+          &::after {
+            width: 100%;
+          }
+        }
+        
+        &.active {
+          background: rgba(255, 255, 255, 0.5);
+          
+          &::after {
+            width: 100%;
+            background: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .figure-slide {
+    &__content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+      padding: 2rem 1.5rem;
+    }
+    
+    &__info {
+      .info-title {
+        font-size: 3rem;
+      }
+    }
+    
+    &__details {
+      align-items: flex-start;
+      
+      .detail-date {
+        text-align: left;
+      }
+      
+      .credit-item {
+        align-items: flex-start;
+      }
+    }
+  }
+  
+  .scroll-indicator {
+    bottom: 2rem;
+    left: 1.5rem;
+    
+    .scroll-progress {
+      .progress-text {
+        font-size: 1rem;
+      }
+      
+      .progress-bars .progress-bar {
+        width: 30px;
+      }
+    }
+  }
+}
+
+@keyframes bgPan {
+  0% {
+    background-position: 50% 50%;
+  }
+  100% {
+    background-position: 45% 50%;
+  }
+}

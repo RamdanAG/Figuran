@@ -1,0 +1,225 @@
+.figure-slide {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease, visibility 1s ease;
+  
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+  }
+  
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.2) 50%,
+        rgba(0, 0, 0, 0.5) 100%
+      );
+    }
+  }
+  
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+  }
+  
+  &__content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 4rem 3rem;
+    z-index: 5;
+  }
+  
+  &__info {
+    flex: 1;
+    
+    .info-tag {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5rem;
+      font-family: 'Crimson Text', serif;
+      font-weight: 300;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+    
+    .info-title {
+      font-size: 5rem;
+      font-weight: 300;
+      color: white;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      font-family: 'Playfair Display', serif;
+      animation: fadeInUp 1s ease 0.4s both;
+    }
+    
+    .info-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0 0 2rem 0;
+      letter-spacing: 0.08em;
+      font-family: 'Crimson Text', serif;
+      font-weight: 300;
+      animation: fadeInUp 1s ease 0.6s both;
+    }
+    
+    .info-btn {
+      background: white;
+      color: #000;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Crimson Text', serif;
+      font-weight: 400;
+      animation: fadeInUp 1s ease 0.8s both;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+  
+  &__details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2rem;
+    animation: fadeInUp 1s ease 1s both;
+    
+    .detail-date {
+      font-size: 1.1rem;
+      color: white;
+      letter-spacing: 0.1em;
+      font-family: 'Crimson Text', serif;
+      text-align: right;
+      
+      .copyright {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 0.25rem;
+      }
+    }
+    
+    .detail-credits {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      
+      .credit-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+        
+        .credit-label {
+          font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.6);
+          letter-spacing: 0.1em;
+          font-family: 'Crimson Text', serif;
+        }
+        
+        .credit-name {
+          font-size: 0.95rem;
+          color: white;
+          letter-spacing: 0.05em;
+          font-family: 'Crimson Text', serif;
+        }
+      }
+    }
+  }
+  
+  &__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    z-index: 100;
+    
+    .progress-bar {
+      height: 100%;
+      background: white;
+      transition: width 0.016s linear;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .figure-slide {
+    &__content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+    
+    &__info {
+      .info-title {
+        font-size: 3rem;
+      }
+    }
+    
+    &__details {
+      align-items: flex-start;
+      
+      .credit-item {
+        align-items: flex-start;
+      }
+    }
+  }
+}

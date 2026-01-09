@@ -1,0 +1,8 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; // 🔥 kunci horizontal overflow (penyebab bg putih)
+  background: #000;   // fallback aman
+}
