@@ -110,7 +110,6 @@ const FigureScroll = ({ figures }) => {
                 <div className="info-tag">Released products</div>
                 <h1 className="info-title">{figure.title}</h1>
                 <p className="info-subtitle">{figure.subtitle}</p>
-                <button className="info-btn">EXPLORE</button>
               </div>
               
               <div className="figure-slide__details">
