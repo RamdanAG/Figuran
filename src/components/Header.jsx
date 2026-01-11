@@ -15,8 +15,8 @@ const Header = ({ isVisible = true }) => {
   };
 
   const toggleLang = () => {
-    setIsLangOpen(!isLangOpen);
-  };
+    setIsLangOpen(!isLanOpen);
+  }; 
 
   const handleLangChange = (lang) => {
     setCurrentLang(lang);
